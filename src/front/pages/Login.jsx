@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
   const { store, dispatch } = useGlobalReducer();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const token = sessionStorage.getItem("token");
@@ -30,6 +32,11 @@ export const Login = () => {
       .then(data => {
         console.log("this came from the backend", data);
         sessionStorage.setItem("token", data.access_token);
+        dispatch({
+          type: "add_token",
+          payload: data.access_token
+        });
+        navigate("/secretPage")
       })
       .catch((error) => {
         console.error("There was an error!!", error);
