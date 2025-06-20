@@ -25,15 +25,12 @@ export default function storeReducer(store, action = {}) {
         message: action.payload
       };
       
-    case 'add_task':
-
-      const { id,  color } = action.payload
-
+    case 'set_message':
       return {
-        ...store,
-        todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
-      };
-    
+        ...store, 
+        message: action.payload
+      }
+
     case 'add_token':
       return {
         ...store, 
